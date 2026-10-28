@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<base href="/pages/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stránky</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#1e5b40">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root {
+    --bg: #eef2ef; --surface: #ffffff; --text: #16201a; --muted: #56645b; --line: #d6ded8;
+    --accent: #1e5b40; --accent-text: #ffffff; --warning: #a3470b; --warning-bg: #fbeee2;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 4px 16px rgba(0, 0, 0, .07);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101512; --surface: #1a211d; --text: #e4eae6; --muted: #9aa8a0; --line: #2d3832;
+      --accent: #3f9a6e; --accent-text: #08130d; --warning: #f0a46a; --warning-bg: #3a2618;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 16px rgba(0, 0, 0, .3);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text); background: var(--bg); -webkit-tap-highlight-color: transparent;
+  }
+  [hidden] { display: none !important; }
+  button, input { font: inherit; color: inherit; }
+  .button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+    padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+    font-weight: 600; text-decoration: none; color: var(--text); cursor: pointer; touch-action: manipulation;
+  }
+  .button.primary { background: var(--accent); border-color: transparent; color: var(--accent-text); }
+  .button:disabled { opacity: .55; cursor: default; }
+  .button svg { width: 18px; height: 18px; flex: none; }
+  .message { padding: 10px 12px; border-radius: 10px; font-size: 15px; }
+  .message:empty { display: none; }
+  .message.warning { background: var(--warning-bg); color: var(--warning); }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; padding: 0; }
+
+  /* lock and status screens */
+  .screen {
+    min-height: 100vh; min-height: 100dvh; display: grid; place-items: center;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+  }
+  .lock-screen { background: linear-gradient(160deg, #1e5b40, #143a29); }
+  .card {
+    width: 100%; max-width: 390px; background: var(--surface); border-radius: 18px; padding: 24px 20px 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .3); display: flex; flex-direction: column; gap: 14px;
+  }
+  .status-screen .card { box-shadow: var(--shadow); text-align: center; align-items: center; }
+  .card h1 { margin: 0; font-size: 22px; }
+  .card p { margin: 0; color: var(--muted); }
+  .lock-icon { width: 38px; height: 38px; color: var(--accent); }
+  .password {
+    width: 100%; font-size: 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
+    background: var(--surface);
+  }
+  .password:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  .option { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 15px; color: var(--muted); }
+  .option input { width: 22px; height: 22px; accent-color: var(--accent); margin: 0; flex: none; }
+  .card .button.primary { width: 100%; min-height: 50px; font-size: 17px; }
+  #statusActions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  #statusActions:empty { display: none; }
+
+  /* hub */
+  .hub {
+    max-width: 960px; margin: 0 auto;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  }
+  .header { display: flex; align-items: center; gap: 12px; padding: 4px 0 8px; }
+  .header h1 { margin: 0; font-size: 24px; }
+  .header .memory { flex: 1; min-width: 0; color: var(--muted); font-size: 13px; }
+  .group h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+    margin: 22px 0 8px; font-weight: 700;
+  }
+  .grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .tile {
+    --color: var(--accent);
+    display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 12px 14px;
+    background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); color: var(--text);
+    text-decoration: none; border: 1px solid transparent; touch-action: manipulation;
+  }
+  .tile:hover { border-color: var(--color); }
+  .tile:focus-visible { outline: 2px solid var(--color); outline-offset: 2px; }
+  .tile .icon {
+    width: 50px; height: 50px; border-radius: 14px; flex: none; display: grid; place-items: center;
+    font-size: 26px; font-weight: 700; color: #fff; background: var(--color);
+  }
+  .tile .text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .tile b { font-size: 17px; line-height: 1.25; }
+  .tile small {
+    color: var(--muted); font-size: 14px; line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .empty { color: var(--muted); margin-top: 24px; }
+  .footer { margin-top: 28px; color: var(--muted); font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+<main id="status" class="screen status-screen">
+  <div class="card"><p id="statusText">Načítám…</p><div id="statusActions"></div></div>
+</main>
+
+<main id="lock" class="screen lock-screen" hidden>
+  <form id="lockForm" class="card" autocomplete="on">
+    <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <h1>Stránky</h1>
+    <p>Obsah je zašifrovaný. Zadej heslo nebo záchranný klíč (ZK-…).</p>
+    <input type="text" name="username" autocomplete="username" value="stranky" class="sr-only" tabindex="-1" aria-hidden="true">
+    <label class="sr-only" for="password">Heslo</label>
+    <input id="password" class="password" type="password" name="password" autocomplete="current-password"
+      autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Heslo" required>
+    <label class="option"><input type="checkbox" id="forget"> Nepamatovat (cizí zařízení, nejvýš 12 hodin)</label>
+    <button class="button primary" id="unlockButton" type="submit">Odemknout</button>
+    <div class="message" id="lockMessage" aria-live="polite"></div>
+  </form>
+</main>
+
+<main id="hub" class="hub" hidden>
+  <header class="header">
+    <h1>Stránky</h1>
+    <span class="memory" id="memory"></span>
+    <button class="button" id="lockButton" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Zamknout
+    </button>
+  </header>
+  <div id="tiles"></div>
+  <footer class="footer" id="footer"></footer>
+</main>
+
+<noscript><p style="text-align:center">Stránky potřebují zapnutý JavaScript.</p></noscript>
+<script src="cipher.js"></script>
+<script src="loader.js"></script>
+</body>
+</html>

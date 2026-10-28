@@ -1,0 +1,13 @@
+{
+  "name": "Stránky",
+  "short_name": "Stránky",
+  "lang": "cs",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef2ef",
+  "theme_color": "#1e5b40",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

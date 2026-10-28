@@ -1,0 +1,23 @@
+{
+  "v": 1,
+  "locks": [
+    {
+      "id": "2a473456",
+      "kind": "password",
+      "kdf": "PBKDF2-SHA256",
+      "iter": 600000,
+      "salt": "4PMyzND0e8PvfXcGj+Me4w==",
+      "iv": "FQO7jfI/dvug3Rz7",
+      "wrappedKey": "yrpy358UipQeqaMnQ+t+lBEXAfUmuDXlBmFBZGSBviTsDaQGhD/PpihxuRsmSuxT"
+    },
+    {
+      "id": "32f5527a",
+      "kind": "recovery",
+      "kdf": "PBKDF2-SHA256",
+      "iter": 600000,
+      "salt": "+ahyDstsW0aTyJBvbTIUQw==",
+      "iv": "ubyvBM1TYdMYDUQ5",
+      "wrappedKey": "9Mc+G/y0TfLmxplHj1PbSd+Q13KdYr/8h3fsN6rM5gDwGyIvqryi5dhc9fAHkFAc"
+    }
+  ]
+}

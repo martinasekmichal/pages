@@ -1,0 +1,4 @@
+# The readable vault working folder is never committed.
+src/
+node_modules/
+.DS_Store
